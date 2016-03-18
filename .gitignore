@@ -1,0 +1,22 @@
+# Приватные файлы
+**/*.txt
+!requirements.txt
+db.sqlite3
+**/*secret*
+**/*NOT-FOR-GIT*
+test/**
+test.py
+
+# Файлы, создаваемые приложением
+*.pyc
+__pycache__/
+.idea/
+.vagrant/
+
+# Статика
+test/**
+test/*
+static/**
+bower_components/**
+
+

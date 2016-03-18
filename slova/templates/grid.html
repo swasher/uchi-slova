@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block body %}
+
+<table class="table table-striped table-hover table-bordered">
+    {% for row in table %}
+       <tr value="{{ row.pk }}">
+           <td class="col-md-2">{{ row.eng }}</td>
+           <td class="col-md-2">
+                <div class="btn-group-xs" role="group" aria-label="...">
+                  <button type="button" class="btn btn-success" value="remember">Помню!</button>
+                  <button type="button" class="btn btn-danger" value="notremember">Не помню!</button>
+                  <span class="badge">{{ row.points }}</span>
+                </div>
+           </td>
+           <td  class="col-md-2" value="rus"><span hidden>{{ row.rus }}</span></td>
+       </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
