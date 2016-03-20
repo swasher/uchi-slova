@@ -142,7 +142,7 @@ DATABASES['default'].update(db_from_env)
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'collectstatic')
 
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, "static"),
+    os.path.join(PROJECT_ROOT, "uchislova/collectstatic"),
     'bower_components',
 ]
 

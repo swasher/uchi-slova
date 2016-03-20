@@ -32,6 +32,7 @@ Vagrant.configure(2) do |config|
     npm install -g bower
     usermod -aG vagrant www-data
     echo '    IdentityFile /home/vagrant/.ssh/github' >> /etc/ssh/ssh_config
+    ln -s /usr/bin/nodejs /usr/bin/node
   SHELL
 
 
