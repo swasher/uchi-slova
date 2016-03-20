@@ -14,12 +14,16 @@ import os
 import dj_database_url
 
 
+# /home/vagrant/uchislova/uchislova
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# /home/vagrant/uchislova
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
+# HOME на один уровень выше, чем BASE. Я хочу, чтобы media, log и другие директории лежили *рядом* с проектом, а не внутри
+# /home/vagrant
+HOME_DIR = os.path.dirname(BASE_DIR)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'qc3hs4lu+hg1^7s7w_$rm@f$k0$6)gu0rji^$3j@9m_d67)w&b'
@@ -128,11 +132,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = [
-#     # os.path.join(BASE_DIR, "static"),
-#     'bower_components',
-# ]
-
 LOGIN_REDIRECT_URL = '/'
 
 # heroku: Update database configuration with $DATABASE_URL.
@@ -140,13 +139,10 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 # heroku: static
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'collectstatic')
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-
-# Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, 'static'),
+    os.path.join(PROJECT_ROOT, "static"),
     'bower_components',
 ]
 
