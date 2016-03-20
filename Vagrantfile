@@ -6,7 +6,8 @@ project_name = "uchislova"
 
 Vagrant.configure(2) do |config|
 
-  config.vm.box = "larryli/vivid64"
+  #config.vm.box = "larryli/vivid64"
+  config.vm.box = "ubuntu/wily64"
   config.vm.network "private_network", ip: internal_ip
   config.vm.hostname = "slova"
 
@@ -30,12 +31,25 @@ Vagrant.configure(2) do |config|
     apt-get install python3-venv -y
     npm install -g bower
     usermod -aG vagrant www-data
+    echo '    IdentityFile /home/vagrant/.ssh/github' >> /etc/ssh/ssh_config
   SHELL
 
-  config.vm.provision "shell", privileged: false, inline: "wget -q https://raw.githubusercontent.com/django/django/master/extras/django_bash_completion -O django_bash_completion"
-  config.vm.provision "shell", privileged: false, inline: "echo source django_bash_completion >> ~/.bashrc"
-  config.vm.provision "shell", privileged: false, inline: "pyvenv virtualenvironment"
-  config.vm.provision "shell", privileged: false, inline: "source /home/vagrant/virtualenvironment/bin/activate && pip install django"
+
+    # - install django and pip autocompletions
+    # - create virtualenvironment
+    # - install pip requirements
+    # - install heroku tools
+
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    wget -q https://raw.githubusercontent.com/django/django/master/extras/django_bash_completion -O django_bash_completion
+    echo source django_bash_completion >> ~/.bashrc
+    pip completion --bash >> ~/.profile
+    pyvenv virtualenvironment
+    source /home/vagrant/virtualenvironment/bin/activate && pip install -r uchislova/requirements.txt
+    wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+    git config --global user.email "mr.swasher@gmail.com"
+    git config --global user.name "swasher"
+  SHELL
 
   # этими строками создается проект джанго... но получается, что при повторном развертывании среды, когда проект уже
   # создан, эти настройки конфликтуют с уже имеющимся проектом... поэтому автоматическому созданию проекта джанго тут не место.
