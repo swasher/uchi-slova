@@ -18,7 +18,7 @@
     <script src="{% static "slova.js" %}"></script>
     <link rel="stylesheet" href="{% static "slova.css" %}">
 
-    <title>УЧИ СЛОВА 111</title>
+    <title>УЧИ СЛОВА</title>
     {% block head %}  {% endblock %}
 </head>
 
@@ -26,6 +26,7 @@
 
 <div class="row">
 <div class="center-block" style="width:800px;">
+
 
 <nav class="navbar navbar-default center-block" role="navigation">
     <div class="container-fluid ">
@@ -53,8 +54,8 @@
 
             {% if user.is_authenticated %}
                 <div class="navbar-form navbar-right btn-group">
-                    <a href="{% url 'admin:index' %}" class="btn btn-default" role="button"><span class="glyphicon glyphicon-wrench"></span>Admin</a>
-                    <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-user"></span> {{ user.username }}</button>
+                    <a href="{% url 'admin:index' %}" class="btn btn-default" role="button"><span class="glyphicon glyphicon-wrench"></span></a>
+                    <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-user"></span> {{ user.email }}</button>
                     <a href="{% url 'logout' %}?next=/" class="btn btn-default" role="button"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
                 </div>
 
@@ -127,7 +128,12 @@
     <div class="container-fluid">
         <ul class="messages">
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert"> {{ message }} </div>
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
             {% endfor %}
         </ul>
     </div>

@@ -10,7 +10,7 @@ from slova.forms import AddNewWordForm
 
 
 def hello(request):
-    return SimpleTemplateResponse('hello.html')
+    return render_to_response('hello.html', RequestContext(request))
 
 
 @login_required(login_url='/login/')

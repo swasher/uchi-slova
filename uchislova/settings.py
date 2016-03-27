@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 import dj_database_url
 
+SERVER = os.getenv('SERVER')
+PRODUCTION = True if SERVER == 'heroku' else False
+
 
 # /home/vagrant/uchislova/uchislova
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -29,7 +32,7 @@ HOME_DIR = os.path.dirname(BASE_DIR)
 SECRET_KEY = 'qc3hs4lu+hg1^7s7w_$rm@f$k0$6)gu0rji^$3j@9m_d67)w&b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False if PRODUCTION else True
 
 ALLOWED_HOSTS = ['*']
 
@@ -43,8 +46,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
     'slova',
 ]
+if not PRODUCTION:
+    INSTALLED_APPS.append('debug_toolbar')
+
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -110,15 +117,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'slova.CustomizedUser'
+AUTH_USER_MODEL = 'accounts.CustomizedUser'
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
@@ -132,7 +139,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'grid'
+
 
 # heroku: Update database configuration with $DATABASE_URL.
 db_from_env = dj_database_url.config(conn_max_age=500)

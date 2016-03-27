@@ -44,10 +44,12 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
     wget -q https://raw.githubusercontent.com/django/django/master/extras/django_bash_completion -O django_bash_completion
     echo source django_bash_completion >> ~/.bashrc
-    pip completion --bash >> ~/.profile
+    source /home/vagrant/virtualenvironment/bin/activate && pip completion --bash >> ~/.bashrc
     pyvenv virtualenvironment
     source /home/vagrant/virtualenvironment/bin/activate && pip install -r uchislova/requirements.txt
     wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+    heroku plugins:install git://github.com/stefansundin/heroku-bash-completion.git
+    echo "source '$HOME/.heroku/plugins/heroku-bash-completion/heroku-completion.bash'" >> .bashrc
     git config --global user.email "mr.swasher@gmail.com"
     git config --global user.name "swasher"
   SHELL

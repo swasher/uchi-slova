@@ -21,5 +21,6 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('django.contrib.auth.urls')),
+    url(r'^', include('accounts.urls')),
     url(r'^', include('slova.urls')),
 ]
