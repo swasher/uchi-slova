@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 ]
 if not PRODUCTION:
     INSTALLED_APPS.append('debug_toolbar')
+    INTERNAL_IPS = '172.28.128.3'
 
 
 MIDDLEWARE_CLASSES = [
