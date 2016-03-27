@@ -10,7 +10,9 @@ from slova.forms import AddNewWordForm
 
 
 def hello(request):
-    return render_to_response('hello.html', RequestContext(request))
+    from django.conf import settings
+    test = settings.DATABASES
+    return render_to_response('hello.html', {'test': test}, RequestContext(request))
 
 
 @login_required(login_url='/login/')
