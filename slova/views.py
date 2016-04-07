@@ -32,7 +32,7 @@ def add_word(request):
             # I have more things I want to do with it."
             word.user = request.user # Set the user object here
             word.save() # Now you can send it to DB
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/grid/')
 
     # if a GET (or any other method) we'll create a blank form
     else:

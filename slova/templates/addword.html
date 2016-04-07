@@ -2,7 +2,6 @@
 
 {% block body %}
 
-{#<form action="{% url 'add_word' %}" method="post">#}
 <form accept-charset="UTF-8" method="post" role="form" action="{% url 'add_word' %}">
     {% csrf_token %}
     {{ form }}
