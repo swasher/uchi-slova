@@ -10,16 +10,14 @@ from slova.forms import AddNewWordForm
 
 
 def hello(request):
-    from django.conf import settings
-    test = settings.DATABASES
-    return render_to_response('hello.html', {'test': test}, RequestContext(request))
+    return render_to_response('hello.html', RequestContext(request))
 
 
 @login_required(login_url='/login/')
 def grid(request):
     context = RequestContext(request)
 
-    table = Slova.objects.all()
+    table = Slova.objects.filter(user__email=request.user.email)
     return render_to_response('grid.html', {'table': table}, context)
 
 

@@ -1,1 +1,1 @@
-"# uchi-slova" 
+# uchi-slova

@@ -17,5 +17,6 @@ class Slova(models.Model):
         verbose_name = 'Слово'
         verbose_name_plural = 'Слова'
 
-    def __unicode__(self):
-        return self.name
+    def __str__(self):
+        return '{} by {}'.format(self.eng, self.user.email)
+        #return self.rus

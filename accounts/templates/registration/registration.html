@@ -2,17 +2,25 @@
 
 {% block body %}
 
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
+
                 <div class="panel-heading">
                     <h3 class="panel-title">Please register</h3>
                 </div>
                 <div class="panel-body">
-                    <form accept-charset="UTF-8" method="post" role="form" action="{% url 'user_registration' %}">
+                    <form accept-charset="UTF-8" method="post" role="form" action="{% url 'user_registration' %}" novalidate>
                     {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                          <ul>
+                            {% for error in form.non_field_errors %}
+                              <li>{{ error }}</li>
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
 
                         <div class="form-group">
                             <div class="input-group">

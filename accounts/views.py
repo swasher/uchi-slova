@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.template.context_processors import csrf
 
 
-from .forms import UserCreationForm
+from .forms import UserRegistrationForm
 from slova.models import Slova
 
 def user_registration(request):
@@ -16,17 +16,17 @@ def user_registration(request):
     """
     context = RequestContext(request)
 
-    # Булевое значение, которое говорит темплейту, что аккаунт зарегистрирован удачно.
-    # Изначально установлено в False. Изменяется в True когда аккаунт удачно зарегестрирован
-    registered = False
+    #check if user is already logged in and if he is redirect him to some other url, e.g. home
+    if request.user.is_authenticated():
+        messages.add_message(request, messages.SUCCESS, 'You are already registered!')
+        return HttpResponseRedirect('/grid/')
 
     if request.method == 'POST':
-        form = UserCreationForm(data=request.POST)
+        form = UserRegistrationForm(data=request.POST)
         #email, password = request.POST['email'], request.POST['password']
         if form.is_valid():
             user = form.save()
-            user.set_password(user.password)
-            user.save()
+            #user.save()
             registered = True
 
             slovo = Slova(rus='Привет!', eng="Hello!", user=user)
@@ -41,26 +41,26 @@ def user_registration(request):
 
             ###   Immediately  loggining
 
-            user = authenticate(username=user.email, password=user.password)
+            user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password'])
             if user is not None:
                 if user.is_active:
                     messages.add_message(request, messages.SUCCESS, 'You are sucessfully registered!')
                     login(request, user)
-                    return redirect('grid')
+                    return HttpResponseRedirect('/grid')
                 else:
                     messages.add_message(request, messages.SUCCESS, 'Your account are disabled')
-                    return redirect('hello')
+                    return HttpResponseRedirect('hello')
             else:
                 messages.add_message(request, messages.WARNING, 'Invalid login')
-                return redirect('login')
+                return HttpResponseRedirect('login')
     else:
-        form = UserCreationForm()
+        form = UserRegistrationForm()
 
     # token = {}
     # token.update(csrf(request))
     # token['form'] = form
 
-    return render_to_response('registration/registration.html', {'form': form, 'registered': registered}, context)
+    return render_to_response('registration/registration.html', {'form': form}, context)
 
 
 
@@ -105,3 +105,5 @@ def user_login(request):
 def login_redirect(request):
     messages.add_message(request, messages.INFO, 'Вы должны быть зарегистрированны для выполнения этой операции.')
     return redirect('hello')
+
+

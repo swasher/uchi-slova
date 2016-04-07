@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
 from accounts.models import CustomizedUser
+from slova.models import Slova
 
 class CustomizedUserInline(admin.StackedInline):
     model = CustomizedUser
@@ -21,3 +22,4 @@ class UserAdmin(BaseUserAdmin):
 admin.site.register(CustomizedUser)
 admin.site.register(User, UserAdmin)
 admin.site.unregister(Group)
+admin.site.register(Slova)
