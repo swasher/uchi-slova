@@ -10,6 +10,8 @@ from slova.forms import AddNewWordForm
 
 
 def hello(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/grid/')
     return render_to_response('hello.html', RequestContext(request))
 
 
