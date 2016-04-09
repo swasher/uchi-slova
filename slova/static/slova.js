@@ -2,12 +2,16 @@
  * Created by swasher on 08.03.2016.
  */
 
-/*
-Hook for table's buttons
- */
+
 
 function simpleObjInspect(oObj, key, tabLvl)
-// usage: alert(simpleObjInspect(Obj));
+/**
+ * Function for debugging purpose. It help check objects of any type.
+ *
+ * usage: alert(simpleObjInspect(Obj));
+ *
+ */
+
 {
     key = key || "";
     tabLvl = tabLvl || 1;
@@ -33,16 +37,20 @@ function simpleObjInspect(oObj, key, tabLvl)
     return s;
 }
 
+/*
+Hook for table's buttons
+ */
+
 $(document).ready(function() {
 
     // по нажитию выполняем вьюху, и изменяем цвет и текст в соответствии с
     // возвращенным из вььхи значением [для Import mode]
-    $(".table").on('click','.btn', function(event) {
+    $(".table").on('click','.choisebtn', function(event) {
 
-        var remember_or_not = $(this).attr("value");
+        var word_is_remembered = $(this).attr("value");
         var accumulated_points = 0;
 
-        switch (remember_or_not) {
+        switch (word_is_remembered) {
             case "remember":
                 accumulated_points = 1;
                 break;
@@ -51,27 +59,56 @@ $(document).ready(function() {
                 break;
         }
 
-        var pk = $(this).parents('tr').attr('value');
+        var pk = $(this).parents('tr').attr('id');
 
-        if (!event.shiftKey) {
-            // если кнопка нажата без шифта, то выполняется изменение поинтов
-            $.getJSON("/change_points/", {pk: pk, accumulated_points: accumulated_points}, function (json) {
-                $("table tr[value=" + pk + "] span[class='badge'] ").html(json['points']);
-                $("table tr[value=" + pk + "] td[value='rus'] span").removeAttr("hidden");
+        // при нажатии кнопки выполняется изменение поинтов
+        // если достигнут лимит запоминания, выдается сообщение
+        $.getJSON("/change_points/", {pk: pk, accumulated_points: accumulated_points}, function (json) {
+            $("table tr[id=" + pk + "] span[class='badge'] ").html(json['points']);
+            if (json['limit']) {
+                $("table tr[id=" + pk + "] td[value='rus'] span:first").text("You can remember!").addClass("win");
+                //$("table tr[id=" + pk + "] td[value='rus'] span:first").addClass("win");
+            } else {
+                $("table tr[id=" + pk + "] td[value='rus'] span").removeAttr("hidden");
+            }
+        });
+
+    });
+
+
+    $('[data-toggle="confirmation"]').confirmation({
+        title: "Are you sure to remove?",
+        placement: "left",
+        singleton: "True",
+        popout: "True",
+        container: 'body',
+        btnOkLabel: "&nbsp;Delete",
+        btnOkClass: "btn-xs btn-danger",
+        btnOkIcon: "glyphicon glyphicon-remove",
+        btnCancelLabel: "&nbsp;Cancel",
+        btnCancelIcon: "glyphicon glyphicon-repeat",
+        onConfirm: function(event, element) {
+            var pk = $(this).parents('tr').attr('id');
+
+            $.getJSON("/delete_word/", {pk: pk}, function (json) {
+                // put here refresh table code
+
+                // or we can remove row right now from DOM
+
             });
-        }
-        else {
-            // а если с шифтом (скрытая функция), то удаляется запись
-            $.getJSON("/delete_word/", {pk: pk}, function (json) {}
-            );
+            $(this).confirmation('destroy');
+            $(this).parents('tr').remove();
         }
     });
+
 });
 
 
-/*
+/* deprecated
+
+/!*
 Registration form
- */
+ *!/
 
 $(function() {
 
@@ -91,3 +128,4 @@ $(function() {
 	});
 
 });
+*/

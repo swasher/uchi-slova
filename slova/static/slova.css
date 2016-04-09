@@ -1,4 +1,41 @@
+.eng {
+    text-align: end
+}
+
+.centercolumn {
+    text-align: center;
+}
+
+.win {
+    color: dodgerblue;
+    font-weight: bold;
+}
+
 .errorlist {
     color: red;
     font-size: 0.75em;
+}
+
+#fix{padding-bottom: 40px;
+}
+
+.panel-title {
+    color: gray;
+}
+
+.del-button-parent {
+    position: relative;
+    width: 100%;
+}
+
+.del-button {
+    /*padding: 0;*/
+    /*margin: 0;*/
+    position: absolute;
+    top: 0px;
+    right: 8px;
+    vertical-align: middle;
+    /*width: 70px;*/
+    /*height: 25px;*/
+    /*background: #8080FF;*/
 }
