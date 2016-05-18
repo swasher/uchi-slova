@@ -6,11 +6,11 @@
 
 {#<a href="#Delete"  data-toggle="confirmation" data-singleton="true" data-placement="top" data-popout="true"><span title="Excluir o projeto">Excluir</span></a>#}
 
-<table class="table table-striped table-hover table-bordered">
+<table class="table table-striped table-hover table-bordered table-curved">
     {% for row in table %}
         <tr id="{{ row.pk }}">
             <td class="eng col-md-2">{{ row.eng }}</td>
-            <td class="centercolumn col-md-2">
+            <td class="centercolumn col-md-1">
                 <div class="btn-group-xs" role="group" aria-label="...">
                     <button type="button" class="choisebtn btn btn-success" value="remember">Помню!</button>
                     <button type="button" class="choisebtn btn btn-danger" value="notremember">Не помню!</button>

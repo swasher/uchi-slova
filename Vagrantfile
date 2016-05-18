@@ -6,7 +6,6 @@ project_name = "uchislova"
 
 Vagrant.configure(2) do |config|
 
-  #config.vm.box = "larryli/vivid64"
   config.vm.box = "ubuntu/wily64"
   config.vm.network "private_network", ip: internal_ip
   config.vm.hostname = "slova"
@@ -53,10 +52,5 @@ Vagrant.configure(2) do |config|
     git config --global user.email "mr.swasher@gmail.com"
     git config --global user.name "swasher"
   SHELL
-
-  # этими строками создается проект джанго... но получается, что при повторном развертывании среды, когда проект уже
-  # создан, эти настройки конфликтуют с уже имеющимся проектом... поэтому автоматическому созданию проекта джанго тут не место.
-  # config.vm.provision "shell", privileged: false, inline: "source "+workon+" && cd "+project_name+" && django-admin.py startproject " + project_name + " ."
-  # config.vm.provision "shell", privileged: false, inline: "source "+workon+" && cd "+project_name+" && django-admin.py startapp " + app_name
 
 end

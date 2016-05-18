@@ -15,6 +15,3 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "uchislova.settings")
 
 application = get_wsgi_application()
 application = DjangoWhiteNoise(application)
-
-
-

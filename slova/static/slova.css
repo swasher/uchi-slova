@@ -1,3 +1,8 @@
+#fix {
+    width: 900px;
+    padding-bottom: 40px;
+}
+
 .eng {
     text-align: end
 }
@@ -14,9 +19,6 @@
 .errorlist {
     color: red;
     font-size: 0.75em;
-}
-
-#fix{padding-bottom: 40px;
 }
 
 .panel-title {
